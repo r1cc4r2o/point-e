@@ -3,4 +3,6 @@ __pycache__/
 point_e_model_cache/
 .ipynb_checkpoints/
 .DS_Store
+3d-diffusion/data
+3d-diffusion/trained_model.pt
 
