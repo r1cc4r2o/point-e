@@ -24,7 +24,16 @@ def logsnr_schedule_cosine(t, *, logsnr_min=-20., logsnr_max=20.):
 def xt2batch(x, logsnr, z, R, T, K):
     b = x.shape[0]
     
-
+    """
+        {
+            "z", # noisy input image (HxWx3 tensor)
+            "x", # conditioning view (HxWx3 tensor)
+            "logsnr", # log signal-to-noise ratio of noisy image (scalar)
+            "t", # camera positions (two 3d vectors)
+            "R", # camera rotations (two 3x3 matrices)
+            "K", # camera intrinsics (a.k.a. calibration matrix) (3x3 matrix)
+        }
+    """
     return {
         'x': x.cuda(),
         'z': z.cuda(),
@@ -240,6 +249,11 @@ with torch.no_grad():
         
         R = torch.tensor(R)
         T = torch.tensor(T)
+
+        print("img: ", len(record))
+        print("R: ", R.shape)
+        print("T: ", T.shape)
+        print("K: ", len(data_K))
 
         img = sample(model, record=record, target_R=R, target_T=T, K=data_K, w=w)
         
