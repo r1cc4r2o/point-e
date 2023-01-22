@@ -22,6 +22,12 @@ setup(
         "scipy",
         "numpy",
         "clip @ git+https://github.com/openai/CLIP.git",
+        "einops",
+        "visu3d",
+        "tensorboardX",
+        "diffusers",
+        "transformers",
+        "accelerate",
     ],
     author="OpenAI",
 )

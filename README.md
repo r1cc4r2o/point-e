@@ -3,8 +3,12 @@
 
 # Point·E
 
-### Current additions
-- [x] StableDiffusion 2 support
+### Ideas on improvements
+- [x] Generating single views with Stable Diffusion 2 in "white booths" through inpainting (as in 3DiM)
+- [ ] Obtaining 3DiM trained on ShapeNet (or equivalent general dataset) 
+- [ ] Generating novel views with 3DiM
+- [ ] Training Point-E on multiple views 
+- [ ] Point growing? ([Point-NeRF](https://arxiv.org/abs/2201.08845))
 - [ ] Improved pointcloud-to-mesh with [Shape-As-Points](https://pengsongyou.github.io/sap)
 
 # Usage
