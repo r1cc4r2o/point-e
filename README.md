@@ -5,6 +5,7 @@
 
 ### Ideas on improvements
 - [x] Generating single views with Stable Diffusion 2 in "white booths" through inpainting (as in 3DiM)
+- [x] Stochastic conditioning ([3DiM](https://arxiv.org/pdf/2210.04628.pdf))
 - [ ] Obtaining 3DiM trained on ShapeNet (or equivalent general dataset) 
 - [ ] Generating novel views with 3DiM
 - [ ] Training Point-E on multiple views 
