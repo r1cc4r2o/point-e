@@ -39,6 +39,7 @@ class PointCloudSampler:
         sigma_max: Sequence[float] = (120, 160),
         s_churn: Sequence[float] = (3, 0),
     ):
+        # number of models [base_model, upsampler_model]
         n = len(models)
         assert n > 0
 
@@ -131,8 +132,17 @@ class PointCloudSampler:
             sample_shape = (batch_size, 3 + len(self.aux_channels), stage_num_points)
 
             if stage_guidance_scale != 1 and stage_guidance_scale != 0:
+                '''
                 for k, v in stage_model_kwargs.copy().items():
                     stage_model_kwargs[k] = torch.cat([v, torch.zeros_like(v)], dim=0)
+                ''' 
+                # concat each enbedded view with zero 
+                for k, v in stage_model_kwargs.copy().items():
+                    views=[]
+                    for view in v:
+                        print(k,'  ',view.shape)
+                        views.append(torch.cat([view, torch.zeros_like(view)], dim=0))
+                    stage_model_kwargs[k] = views
 
             if stage_use_karras:
                 samples_it = karras_sample_progressive(
@@ -141,7 +151,7 @@ class PointCloudSampler:
                     shape=sample_shape,
                     steps=stage_karras_steps,
                     clip_denoised=self.clip_denoised,
-                    model_kwargs=stage_model_kwargs,
+                    model_kwargs_views=stage_model_kwargs,
                     device=self.device,
                     sigma_min=stage_sigma_min,
                     sigma_max=stage_sigma_max,

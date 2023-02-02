@@ -315,9 +315,20 @@ class CLIPImageGridPointDiffusionTransformer(PointDiffusionTransformer):
         self.cond_drop_prob = cond_drop_prob
 
     def cached_model_kwargs(self, batch_size: int, model_kwargs: Dict[str, Any]) -> Dict[str, Any]:
+        ''' #previous cached_model_kwargs
         _ = batch_size
         with torch.no_grad():
             return dict(embeddings=self.clip.embed_images_grid(model_kwargs["images"]))
+        
+        #    we embed all the views  
+        '''
+        _ = batch_size
+        with torch.no_grad():
+            views=[]
+            print('cached_model_kwargs',list(model_kwargs.keys())*len(model_kwargs['images']))
+            for im , idx in zip(list(model_kwargs.keys())*len(model_kwargs['images']),range(len(model_kwargs['images']))):
+                views.append(self.clip.embed_images_grid([model_kwargs[im][idx]]))
+            return dict(embeddings=views)          
 
     def forward(
         self,
@@ -445,10 +456,18 @@ class CLIPImageGridUpsamplePointDiffusionTransformer(UpsamplePointDiffusionTrans
             )
             return dict(embeddings=zero_emb, low_res=model_kwargs["low_res"])
         with torch.no_grad():
+            views=[]
+            print('cached_model_kwargs',list(model_kwargs.keys())*len(model_kwargs['images']))
+            for im , idx in zip([list(model_kwargs.keys())[0]]*len(model_kwargs['images']),range(len(model_kwargs['images']))):
+                views.append(self.clip.embed_images_grid([model_kwargs[im][idx]]))
             return dict(
+                embeddings=views,
+                low_res=[model_kwargs["low_res"]],
+            )
+            '''return dict(
                 embeddings=self.clip.embed_images_grid(model_kwargs["images"]),
                 low_res=model_kwargs["low_res"],
-            )
+            )'''
 
     def forward(
         self,

@@ -114,6 +114,14 @@ def karras_sample(*args, **kwargs):
         last = x["x"]
     return last
 
+def stochastic_cond(model_kwargs):
+    index=th.randint(0,len(model_kwargs['embeddings']), (1,))[0]
+    for k in list(model_kwargs.keys()):
+        if k=='embeddings':
+            model_kwargs[k]=model_kwargs[k][index]
+        else:
+            model_kwargs[k]=model_kwargs[k][0]
+    return model_kwargs
 
 def karras_sample_progressive(
     diffusion,
@@ -122,7 +130,7 @@ def karras_sample_progressive(
     steps,
     clip_denoised=True,
     progress=False,
-    model_kwargs=None,
+    model_kwargs_views=None,
     device=None,
     sigma_min=0.002,
     sigma_max=80,  # higher for highres?
@@ -140,6 +148,10 @@ def karras_sample_progressive(
         sampler
     ]
 
+    # reduce the dimension of the lists and pick randomly 
+    # one of the view that at this stage condition the model
+    model_kwargs = stochastic_cond(model_kwargs_views)
+    #model_kwargs = model_kwargs_views
     if sampler != "ancestral":
         sampler_args = dict(s_churn=s_churn, s_tmin=s_tmin, s_tmax=s_tmax, s_noise=s_noise)
     else:
