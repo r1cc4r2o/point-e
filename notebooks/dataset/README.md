@@ -17,9 +17,8 @@ unzip dataset-modelnet-shapenet-oc.zip -d /path/to/directory
 
 Hence for each collected mesh, we sampled it into a uniform point cloud and we automatically rendered from the meshes of the object multiple images from different views (10/4 views). You can see the pipeline here [views_render](https://github.com/r1cc4r2o/point-e/blob/main/notebooks/pointrender.ipynb) with all the steps .
 
-
+To illustate the tree of the directories after we unzipped the file:
 ```
-
 <directories>
     > dataset_shapenet_modelnet_texsin_withgeneratedcloud
         >> modelnet_texsin
