@@ -25,6 +25,10 @@ Source to the evaluation datasets:
 | OpenAI seed imgs/clouds             | /       | [Google Drive](https://openaipublic.azureedge.net/main/point-e/banner_pcs.zip)             |   
 | OpenAI, COCO CLIP R-Precision evals | /       | [Google Drive](https://openaipublic.azureedge.net/main/point-e/coco_images.zip)             |   
 
+Here the [link](https://drive.google.com/file/d/1UOT9GfpiNfmVJPVrG2SnMwkpXic3g9iq/view?usp=share_link) of the generated cloud from the dataset ShapeNetv2 and ModelNet40 textureless 
+comprehensive of the ground truth data, score and plot of the pairwise divergence distribution. More 
+details are provided in the description.
+
 #### Executing program
 
 Everything is collected in a zip file. You can extract the file through the command *unzip*
