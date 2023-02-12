@@ -1,21 +1,44 @@
-# Dataset 
+### Dataset 
+To make a comparison between ours multi views with the one single view, 
+we generated these datasets.
+Through experimentation, we generated several datasets from the 
+available sources ModelNet40, ShapeNetV2, ShapeNet. 
+Specifically, the datasets generated from ModelNet40, ShapeNetV2 are 
+without textures because they were not present in the source files.
+Thus, where they were not present we added textures using two approaches 
+that considered the position of the point in space.
+In ShapeNet the textures were present, so all views of the generated 
+objects have the ground truth texture.
 
-Here we have a small dataset for evaluate point-e single/multi view/s. We feched the data from ShapeNet and ModelNet collecting the meshes of one object for each category.
+#### Getting Started & Installing
 
-## Getting Started & Installing
+This is the [link](https://drive.google.com/drive/folders/1qPWA2J4e08tErD8720NlPISAiO3hGaEq?usp=share_link) to the drive folder with all the datasets.
 
-You can download the dataset from this [link](https://drive.google.com/file/d/10eTbweARlVwrvAMS6JgksFWMLzAAbswU/view?usp=sharing). 
+Source to the evaluation datasets:
 
-### Executing program
+| Name                                | Samples | Source        |
+|-------------------------------------|---------|---            |
+| ModelNet40, textureless             | 40      | [Google Drive](https://drive.google.com/file/d/1cP1-fHiSm5eOG60m5WwU08U2Uz9eYp3L/view?usp=share_link)             |   
+| ShapeNetv2, textureless             | 55      | [Google Drive](https://drive.google.com/file/d/1O-htsw9h2MKLpyVlog_672iMHp_VoBcf/view?usp=share_link)             |   
+| Mixed, textureless                  | 190     | [Google Drive](https://drive.google.com/file/d/1YyRBEmpot2JsC2tfeqjwBV1WJh9YMTJT/view?usp=share_link)             | 
+| Shapenet                            | 650     | [Google Drive](https://drive.google.com/file/d/1NS6oDLRMAAHfnvVmT69y6SucDgwllCiw/view?usp=share_link)             | 
+| OpenAI seed imgs/clouds             | /       | [Google Drive](https://openaipublic.azureedge.net/main/point-e/banner_pcs.zip)             |   
+| OpenAI, COCO CLIP R-Precision evals | /       | [Google Drive](https://openaipublic.azureedge.net/main/point-e/coco_images.zip)             |   
+
+#### Executing program
 
 Everything is collected in a zip file. You can extract the file through the command *unzip*
 ```
-unzip dataset-modelnet-shapenet-oc.zip -d /path/to/directory
+unzip nameofthefile.zip -d /path/to/directory
 ```
 
-## Description
+#### Description
 
-Hence for each collected mesh, we sampled it into a uniform point cloud and we automatically rendered from the meshes of the object multiple images from different views (10/4 views). You can see the pipeline here [views_render](https://github.com/r1cc4r2o/point-e/blob/main/notebooks/pointrender.ipynb) with all the steps .
+Hence for each collected mesh, we sampled it into a uniform point cloud and 
+we automatically rendered from the meshes of the object multiple images from 
+different views (10/4 views). You can see the pipeline here 
+[views_render](https://github.com/r1cc4r2o/point-e/blob/main/notebooks/pointrender.ipynb) 
+with all the steps .
 
 To illustate the tree of the directories after we unzipped the file dataset-modelnet-shapenet-oc.zip:
 ```
@@ -59,7 +82,7 @@ To illustate the tree of the directories after we unzipped the file dataset-mode
                 >>>> points.pt
 
 ```
-### Description of the files
+##### Description of the files
 
     - dictionary with {index: 'typeOfObject'}: CLASS_MAP.pt 
 
@@ -91,7 +114,7 @@ To illustate the tree of the directories after we unzipped the file dataset-mode
 
         
 
-### Dependencies
+#### Dependencies
 
 
 * import the files pt with torch
@@ -108,22 +131,19 @@ with open(os.path.join(base_path, 'eval_clouds_'+dataset+'_300M.pickle'), 'rb') 
     data = pickle.load(handle)
 ```
 
-## Future Developments
+#### Future Developments
 As possible future developments, we could:
 - extend the dataset with more than one object for each category
 - extend the dataset with the objects in shapenet psr
 - consider rendering the multiple views images of the objects with random camera pose angle
 
-## Authors
-+ riccardo tedoldi [@riccardotedoldi](https://www.instagram.com/riccardotedoldi/)
+#### Authors
 + diego calanzone [@diegocalanzone](https://it.linkedin.com/in/diegocalanzone)
-
-## Version History
-
++ riccardo tedoldi [@riccardotedoldi](https://www.instagram.com/riccardotedoldi/)
+#### Version History
 * 0.1
     * Initial Release
-
-## License
+### License
 
 Copyright 2023
 
@@ -133,7 +153,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-## Acknowledgments
+#### Acknowledgments
 
 * Dataset [ModelNet40](http://modelnet.cs.princeton.edu/ModelNet40.zip)
 * Dataset [ShapeNetCore](https://shapenet.cs.stanford.edu/shapenet/obj-zip/ShapeNetCore.v2.zip)
