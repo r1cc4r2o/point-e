@@ -191,14 +191,13 @@ Here is shown the tree the [directories](https://drive.google.com/drive/folders/
 
 #### Dependencies
 
-
 * import the files pt with torch
 ```
 images_obj_views = torch.load(os.path.join(base_path,'images_obj.pt'))
 ```
 
-* import the pickle file with the metrics
-* more info in the [notebook1](https://github.com/r1cc4r2o/point-e/blob/main/notebooks/pointStat.ipynb) or [notebook2](https://github.com/r1cc4r2o/point-e/blob/main/notebooks/statPlot.ipynb).
+* import the pickle file with the metrics or the shapenet_withTextures files
+* more info in the [notebook1](https://github.com/r1cc4r2o/point-e/blob/main/notebooks/3_evaluateTheModels.ipynb) or [notebook2](https://github.com/r1cc4r2o/point-e/blob/main/notebooks/4_plotTheResults.ipynb).
 ```
 dataset = 'shapenet'
 base_path = os.path.join(dataset+"_texsin")
@@ -207,10 +206,11 @@ with open(os.path.join(base_path, 'eval_clouds_'+dataset+'_300M.pickle'), 'rb') 
 ```
 
 #### Future Developments
-As possible future developments, we could:
-- extend the dataset with more than one object for each category
+As possible future developments:
+- extend the dataset with the textures with more than 25 objects for each category
 - extend the dataset with the objects in shapenet psr
-- consider rendering the multiple views images of the objects with random camera pose angle
+- run ours [script](https://github.com/r1cc4r2o/point-e/blob/main/notebooks/1_renderTheViews_withTextures.ipynb) to generate views 512xx512 or 1024x1024 instead 256x256
+- create more than 6 random views of the object changing the parameter 'num_views' in ours [script](https://github.com/r1cc4r2o/point-e/blob/main/notebooks/1_renderTheViews_withTextures.ipynb)
 
 #### Authors
 + diego calanzone [@diegocalanzone](https://it.linkedin.com/in/diegocalanzone)
@@ -231,7 +231,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #### Acknowledgments
 
 * Dataset [ModelNet40](http://modelnet.cs.princeton.edu/ModelNet40.zip)
-* Dataset [ShapeNetCore](https://shapenet.cs.stanford.edu/shapenet/obj-zip/ShapeNetCore.v2.zip)
+* Dataset [ShapeNetCoreV2](https://shapenet.cs.stanford.edu/shapenet/obj-zip/ShapeNetCore.v2.zip)
+* Dataset [ShapeNetCore](http://shapenet.cs.stanford.edu/shapenet/obj-zip/SHREC16/val.zip)
 * [Shapenet](https://shapenet.org/)
 * [Modelnet](https://modelnet.cs.princeton.edu/)
 * Dataset [Shapenet_psr](https://s3.eu-central-1.amazonaws.com/avg-projects/shape_as_points/data/shapenet_psr.zip)
