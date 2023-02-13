@@ -43,16 +43,6 @@ Hence for each collected mesh found, we sampled it into a uniform point cloud. A
 we automatically rendered from the meshes of the ground truth object multiple images from 
 different poses. 
 
-Concerning the set of views in the dataset produced from ShapeNetv2 and ModelNet40 textureless:
-+ the light of the scene is fixed
-+ each view is without any reflections
-+ we fixed the elevation and the distance of the camera from the object and we 
-took 4 pictures rotating around the object
-
-You can see the pipeline for the generation of the ShapeNetv2 and ModelNet40 textureless dataset here 
-[views_render](https://github.com/r1cc4r2o/point-e/blob/main/notebooks/1_renderTheViews_withoutTextures.ipynb) 
-with all the steps.
-
 Concerning the set of views in the dataset produced from ShapeNet with texture:
 + the light of the scene is fixed
 + each view is without any reflections
@@ -62,11 +52,24 @@ Concerning the set of views in the dataset produced from ShapeNet with texture:
   + we fixed the distance of the camera from the object and we 
   took 6 pictures changing stochastically the value of the elevation
   of the camera and rotating around the object 
++ we iterate this procedure on 25 different objects for each class in ShapeNet
++ each view is 256x256 
 
 You can see the pipeline for the generation of the ShapeNet dataset with textures here 
 [views_render](https://github.com/r1cc4r2o/point-e/blob/main/notebooks/1_renderTheViews_withTextures.ipynb) 
 with all the steps.
 
+Concerning the set of views in the dataset produced from ShapeNetv2 and ModelNet40 textureless:
++ the light of the scene is fixed
++ each view is without any reflections
++ we fixed the elevation and the distance of the camera from the object and we 
+took 4 pictures rotating around the object
++ we iterate this procedure on one object for each class in ShapeNetv2 and ModelNet40
++ each view is 512x512
+
+You can see the pipeline for the generation of the ShapeNetv2 and ModelNet40 textureless dataset here 
+[views_render](https://github.com/r1cc4r2o/point-e/blob/main/notebooks/1_renderTheViews_withoutTextures.ipynb) 
+with all the steps.
 
 Here is shown the tree the [directories](https://drive.google.com/drive/folders/1qPWA2J4e08tErD8720NlPISAiO3hGaEq?usp=share_link) with the files: 
 ```
@@ -137,21 +140,38 @@ Here is shown the tree the [directories](https://drive.google.com/drive/folders/
 
 
 ```
-##### Description of the files
+###### Description of the files
+
+    shapenet_withTextures
+
+    - list of the sampled cloud: eval_clouds.pickle # (n_img, ch, n_points) ch: 6, n_points: 4096
+
+    - list of gen views with fixed elevation: eval_views_fixed_elevation.pickle # (n_img, n_view, 256, 256, 3)
+
+    - list of gen views with stochastic elevation: eval_views_stochastic_elevation.pickle # (n_img, n_view, 256, 256, 3)
+    
+    shapenetv2_modelnet40_texrand_texsin
 
     - dictionary with {index: 'typeOfObject'}: CLASS_MAP.pt 
 
-    - multiple viwes for each object: images_obj.pt
+    - multiple viwes for each object: images_obj.pt # (n_img, n_view, 512, 512, 3)
 
-    - label for each object: labels.pt
+    - label for each object: labels.pt # (n_img,)
 
-    - ground truth point cloud: points.pt
+    - ground truth point cloud: points.pt # (n_img,)
 
-    - tensor with the the generated pointcloud with point-e 300M: modelnet_gencloud_300M, shapenet_gencloud_300M
+    - tensor with the the generated pointcloud with point-e 300M: 
+      ch: 6 (first 3 channel coord the others are the rgb colors of each point)
+      n_points: 4096 (generated points)
+                                                      modelnet_gencloud_300M # (n_img, ch, n_points)
+                                                      shapenet_gencloud_300M # (n_img, ch, n_points)
+    
+    dataset_shapenet_modelnet_texsin_withgeneratedcloud
 
-    - dictionaries: eval_clouds_modelnet_300M.pickle, eval_clouds_shapenet_300M.pickle
+    - dictionaries: 
+                eval_clouds_modelnet_300M.pickle
+                eval_clouds_shapenet_300M.pickle
 
-        
         dictionary['nameOfTheObject'][index]
 
                                       index 0: divergence_ground_single
